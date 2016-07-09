@@ -10,12 +10,12 @@ define(function (){
             if ($("#toc").is(":hidden")) {
                 $("#tocButton").attr("value", valueHide);
                 $("#toc").slideDown(320);
-                $(".switch-btn, .switch-area").fadeOut(300);
+                // $(".switch-btn, .switch-area").fadeOut(300);
             }
             else {
                 $("#tocButton").attr("value", valueShow);
                 $("#toc").slideUp(350);
-                $(".switch-btn, .switch-area").fadeIn(500);
+                // $(".switch-btn, .switch-area").fadeIn(500);
             }
         })
     }()
