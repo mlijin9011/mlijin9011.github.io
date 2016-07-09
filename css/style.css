@@ -463,15 +463,14 @@ a {
     position: fixed;
     left: 0.5em;
     top: auto; /*In order to cover style in article.styl*/
-    bottom: 10px;
+    bottom: 1em;
     padding: 0.2em 0.4em;
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    border-style: outset;
-    background: rgba(255,255,255,0.7);
+    background: #3f3f3f;
     font-size: 1em;
     font-weight: bold;
-    color: #808080;
+    color: #d3d3d3;
   }
   #container #tocButton:hover {
     color: #88acdb;
@@ -495,7 +494,7 @@ a {
     padding-left: 0;
     -webkit-border-radius: 2.8%;
     border-radius: 2.8%;
-    background: none;
+    background: #3f3f3f;
     font-size: 1em;
     line-height: 1.25em;
   }
@@ -503,7 +502,7 @@ a {
     display: none;
     padding: 0.3em;
     color: #fff;
-    background: #d3d3d3;
+    background: none;
     -webkit-border-radius: 3px;
     border-radius: 3px;
   }
@@ -515,7 +514,7 @@ a {
     padding: 0.5em;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    background: rgba(255,255,255,0.85);
+    background: none;
   }
   #container .toc-article ol ol {
     padding: 0.1em 0;
@@ -1662,7 +1661,7 @@ li:hover {
 #tocButton {
   position: fixed;
   left: 220px;
-  top: 400px;
+  top: 57%;
   font-size: 0.9em;
   font-weight: bold;
   font-family: inherit;
@@ -1680,7 +1679,7 @@ li:hover {
   background: #3f3f3f;
   position: fixed;
   width: 230px;
-  top: 393px;
+  top: 56%;
   bottom: 1em;
   left: 15px;
   margin-left: 0;
@@ -1736,7 +1735,7 @@ li:hover {
   color: #eee;
 }
 #toc ol.toc a.toc-link:visited {
-  color: #acbccc;
+  color: #6c7c8c;
 }
 #toc ol.toc a.toc-link:hover {
   color: #88acdb;
