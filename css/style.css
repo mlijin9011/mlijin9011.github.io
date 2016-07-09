@@ -1028,12 +1028,12 @@ a {
   position: fixed;
   top: 61.8%;
   text-align: center;
-  line-height: 30px;
+  line-height: 40px;
 }
 .scroll a {
   display: block;
   width: 29px;
-  height: 30px;
+  height: 40px;
   font-size: 18px;
   background: rgba(215,216,215,0.4);
 }
