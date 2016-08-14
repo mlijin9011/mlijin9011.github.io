@@ -50,11 +50,11 @@
   </entry>
   
   <entry>
-    <title>ReactNative入门（2）-- 接入原生应用</title>
+    <title>ReactNative入门（2）—— 接入原生应用</title>
     <link href="http://mlijin9011.github.io/2016/07/24/ReactNative%E5%85%A5%E9%97%A8%EF%BC%882%EF%BC%89/"/>
     <id>http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/</id>
     <published>2016-07-24T02:18:09.000Z</published>
-    <updated>2016-08-14T09:14:01.000Z</updated>
+    <updated>2016-08-14T09:22:53.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;&amp;#x5B89;&amp;#x88C5;-React-Native-&amp;#x4F9D;&amp;#x8D56;&quot;&gt;&lt;a href=&quot;#&amp;#x5B89;&amp;#x88C5;-React-Native-&amp;#x4F9D;&amp;#x8D56;&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x5B89;&amp;#x88C5; React Native &amp;#x4F9D;&amp;#x8D56;&quot;&gt;&lt;/a&gt;&amp;#x5B89;&amp;#x88C5; React Native &amp;#x4F9D;&amp;#x8D56;&lt;/h2&gt;&lt;p&gt;&amp;#x5728;&amp;#x5DE5;&amp;#x7A0B;&amp;#x6240;&amp;#x5728;&amp;#x76EE;&amp;#x5F55;&amp;#x65B0;&amp;#x5EFA;&amp;#x4E00;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x5939;&amp;#xFF0C;&amp;#x4F5C;&amp;#x4E3A; JS &amp;#x6587;&amp;#x4EF6;&amp;#x76EE;&amp;#x5F55;&amp;#xFF0C;&amp;#x5728;&amp;#x8FD9;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x5939;&amp;#x4E0B;&amp;#xFF0C;&amp;#x5B89;&amp;#x88C5; React &amp;#x548C; React Native &amp;#x4F9D;&amp;#x8D56;&amp;#xFF1A;&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;cd x/xx/xxx #&amp;#x4F60;&amp;#x7684;&amp;#x5DE5;&amp;#x7A0B;&amp;#x8DEF;&amp;#x5F84;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;npm install react&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;npm install react-native&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -97,9 +97,9 @@
       <category term="技术" scheme="http://mlijin9011.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="React Native" scheme="http://mlijin9011.github.io/tags/React-Native/"/>
-    
       <category term="iOS" scheme="http://mlijin9011.github.io/tags/iOS/"/>
+    
+      <category term="React Native" scheme="http://mlijin9011.github.io/tags/React-Native/"/>
     
   </entry>
   
@@ -108,7 +108,7 @@
     <link href="http://mlijin9011.github.io/2016/07/10/ReactNative%E5%85%A5%E9%97%A8%EF%BC%881%EF%BC%89/"/>
     <id>http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/</id>
     <published>2016-07-10T03:54:34.000Z</published>
-    <updated>2016-08-14T09:14:07.000Z</updated>
+    <updated>2016-08-14T09:22:57.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;&amp;#x6982;&amp;#x8FF0;&quot;&gt;&lt;a href=&quot;#&amp;#x6982;&amp;#x8FF0;&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x6982;&amp;#x8FF0;&quot;&gt;&lt;/a&gt;&amp;#x6982;&amp;#x8FF0;&lt;/h2&gt;&lt;p&gt;&amp;#x4F5C;&amp;#x4E3A;&amp;#x4E00;&amp;#x4E2A; iOS &amp;#x539F;&amp;#x751F;&amp;#x5E94;&amp;#x7528;&amp;#x7684;&amp;#x5F00;&amp;#x53D1;&amp;#x8005;&amp;#xFF0C;&amp;#x521A;&amp;#x5F00;&amp;#x59CB;&amp;#x63A5;&amp;#x89E6; React Native&amp;#xFF0C;&amp;#x5148;&amp;#x6765;&amp;#x5B66;&amp;#x4E60;&amp;#x4E0B; React Native &amp;#x4E2D;&amp;#x7684;&amp;#x7EC4;&amp;#x4EF6;&amp;#x7ED3;&amp;#x6784;&amp;#x548C;&amp;#x751F;&amp;#x547D;&amp;#x5468;&amp;#x671F;&amp;#xFF0C;&amp;#x7406;&amp;#x89E3;&amp;#x4E00;&amp;#x4E2A; React Native &amp;#x7EC4;&amp;#x4EF6;&amp;#x5982;&amp;#x4F55;&amp;#x8FDB;&amp;#x884C;&amp;#x5C55;&amp;#x793A;&amp;#xFF0C;&amp;#x5982;&amp;#x4F55;&amp;#x8FDB;&amp;#x884C;&amp;#x5F00;&amp;#x53D1;&amp;#x3002;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
