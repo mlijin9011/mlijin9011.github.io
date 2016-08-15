@@ -1,0 +1,16 @@
+<% if (!index && ((post.toc != false && !is_page() && theme.toc.on) || post.toc)) { %>
+    <div id="toc" class="toc-article">
+        <strong class="toc-title"><%= __('toc.title') %></strong>
+        <% if ((theme.toc.list_number && post.toc_list_number != false) || post.toc_list_number) { %>
+            <%- toc(post.content) %>
+        <% } else { %>
+            <%- toc(post.content, {list_number: false}) %>
+        <% } %>
+    </div>
+
+    <input type="button" id="tocButton" value="<%= __('toc.hide') %>"  title="<%= __('tooltip.tocButton') %>">
+
+    <script>
+        yiliaConfig.toc = ["<%= __('toc.hide') %>", "<%= __('toc.show') %>", !!"<%= theme.toc.nowrap %>"];
+    </script>
+<% } %>
