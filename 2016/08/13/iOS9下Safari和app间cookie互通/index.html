@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="木子李的博客">
+    <title>iOS9下Safari和app间cookie互通 - 木子李的博客</title>
+    <meta name="author" content="Li Jin">
+    
+    
+        <link rel="icon" href="http://mlijin9011.github.io/assets/images/favicon.png">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="概述现在项目有一个需求，比如某新闻业务，当用户还没有下载 app 时，在手机上的 Safari 中浏览了一篇新闻，然后在浏览器中点击“在 app 中查看”，会自动跳转到 AppStore 中下载 app，此时用户可能希望在下载完 app 后能够继续刚才在 Safari 中的浏览内容和一些用户行为。但是用户被引导下载后，并不会希望需要重新回到浏览器，重新再由浏览器发起一个拉起 app 的操作来实现在">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS9下Safari和app间cookie互通">
+<meta property="og:url" content="http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/index.html">
+<meta property="og:site_name" content="木子李的博客">
+<meta property="og:description" content="概述现在项目有一个需求，比如某新闻业务，当用户还没有下载 app 时，在手机上的 Safari 中浏览了一篇新闻，然后在浏览器中点击“在 app 中查看”，会自动跳转到 AppStore 中下载 app，此时用户可能希望在下载完 app 后能够继续刚才在 Safari 中的浏览内容和一些用户行为。但是用户被引导下载后，并不会希望需要重新回到浏览器，重新再由浏览器发起一个拉起 app 的操作来实现在">
+<meta property="og:updated_time" content="2017-04-12T02:52:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS9下Safari和app间cookie互通">
+<meta name="twitter:description" content="概述现在项目有一个需求，比如某新闻业务，当用户还没有下载 app 时，在手机上的 Safari 中浏览了一篇新闻，然后在浏览器中点击“在 app 中查看”，会自动跳转到 AppStore 中下载 app，此时用户可能希望在下载完 app 后能够继续刚才在 Safari 中的浏览内容和一些用户行为。但是用户被引导下载后，并不会希望需要重新回到浏览器，重新再由浏览器发起一个拉起 app 的操作来实现在">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://mlijin9011.github.io/assets/images/avator.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?be9c17478047a4653021804380e57147";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">木子李的博客</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avator.png"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avator.png"/>
+            </a>
+            <span class="sidebar-profile-name">Li Jin</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/mlijin9011" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://weibo.com/mlj90" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:lijinysu@163.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS9下Safari和app间cookie互通
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-08-13T16:10:02+08:00">
+	
+		    2016-08-13
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/技术/">技术</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>现在项目有一个需求，比如某新闻业务，当用户还没有下载 app 时，在手机上的 Safari 中浏览了一篇新闻，然后在浏览器中点击“在 app 中查看”，会自动跳转到 AppStore 中下载 app，此时用户可能希望在下载完 app 后能够继续刚才在 Safari 中的浏览内容和一些用户行为。但是用户被引导下载后，并不会希望需要重新回到浏览器，重新再由浏览器发起一个拉起 app 的操作来实现在 app 中的继续浏览，而是更希望在下载后，直接点击 AppStore 中的打开，或者手动打开 app 后，就能够继续刚才的浏览，这就需要在 Safari 和 app 间形成一种数据的互通。</p>
+<a id="more"></a>
+<p>大概有这么两种方案可以实现这个功能：</p>
+<p>一是当用户在 Safari 中浏览新闻内容时，上传用户行为和用户数据到我们服务器中，以一个唯一标识来标识这个设备的数据，这个数据会有一定的时效性，在这个时效性内下载并打开 app，我们会当做用户是希望能够继续延续刚才的浏览。当用户下载 app 打开后，用唯一标识从服务器请求用户行为数据，通过这个数据来打开相应的浏览内容，这样就实现了上面所说的功能。</p>
+<p>二是当用户在 Safari 中浏览新闻内容时，保存用户行为数据到 Safari 中的 cookie 里，当用户下载并打开 app 后，我们去读取 Safari 中的 cookie，通过 cookie 内容来打开相应的浏览内容。</p>
+<p>第一种方式，能够唯一标识设备的这个值要具备苛刻的条件，想找到其实很不容易，而且可能还会有一定的误伤几率，所以我们选择了第二种方式。</p>
+<h2 id="Cookie-互通"><a href="#Cookie-互通" class="headerlink" title="Cookie 互通"></a>Cookie 互通</h2><p>iOS 系统中每个 app 都有自己的沙盒，无法跨越沙盒去访问数据，但是在 iOS9 以后，苹果提供了一个 API：<code>APISFSafariViewController</code>，它跟系统的 Safari 同属于一个 app，所以通过它可以读到 Safari 中的 cookie，那么我们可以在我们的 app 中打开这个 <code>APISFSafariViewController</code>，这样就可以拿到系统 Safari 中保存的 cookie 数据了。但是这个 cookie 内容只是在 <code>APISFSafariViewController</code> 中打开的 wap 页面可以读到，在 app 内是读不到的，可以通过 URL Scheme（OpenUrl）的方式，把这个 cookie 内容传递到 app 中，这样就可以实现我们上面的需求了。</p>
+<p>具体的实现思路如下：</p>
+<p>用户通过 Safari 浏览 wap1 页面，wap1 页面把用户行为数据写到 cookie 中，当用户通过引导下载 app 后，第一次打开 app 时，在 app 内打开 <code>APISFSafariViewController</code>，打开一个 wap2 页面，在这个 wap2 页面先取到刚才 wap1 页面保存的 cookie 数据，然后在 wap2 中通过 openUrl 的方式，把这个 cookie 数据传递到 app 中，然后通过这个 cookie 数据来实现延续阅读的功能。</p>
+<p>在这里，wap1 页面是我们正常的一个 html 页面，里面只是加一个写用户行为数据到 Safari 中的cookie 的操作，这个 cookie 的域采用我们约定好的值，即只有在这个域下的 html 才能读取到这个 cookie。wap2 页面是一个专门用来静默的获取 wap1 的 cookie 值的页面，并且可以静默的通过 openUrl 的方式把 cookie 回传给 app。</p>
+<p>可能你会觉得在程序启动后，弹出一个 Safari 页面有点不妥，那么我们可以把这个 <code>APISFSafariViewController</code> 设置为纯透明，这样用户就感觉不到了，然后这个纯透明的 Safari 再通过 openUrl 的方式呼起我们要延续阅读的页面，如果不需要延续阅读，那么就设定一个时间值，在这个时间值后，把这个纯透明的 Safari 隐藏。</p>
+<p>参考博文：<a href="http://www.jianshu.com/p/1a46187141fc" target="_blank" rel="external">iOS app与浏览器 跨域互通</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/iOS/">iOS</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/12/17/ReactNative入门（3）/"  data-tooltip="ReactNative入门（3）—— ReactNative与原生的交互">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/07/24/ReactNative入门（2）/" data-tooltip="ReactNative入门（2）—— 接入原生应用">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+             <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/&amp;title=iOS9下Safari和app间cookie互通">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/&amp;title=iOS9下Safari和app间cookie互通">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/08/13/iOS9下Safari和app间cookie互通/"
+     data-title="iOS9下Safari和app间cookie互通" data-url="http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Li Jin. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/12/17/ReactNative入门（3）/"  data-tooltip="ReactNative入门（3）—— ReactNative与原生的交互">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/07/24/ReactNative入门（2）/" data-tooltip="ReactNative入门（2）—— 接入原生应用">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+             <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/&amp;title=iOS9下Safari和app间cookie互通">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/&amp;title=iOS9下Safari和app间cookie互通">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/">
+                <i class="fa fa-twitter"></i><span class="">分享到 Twitter</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/&amp;title=iOS9下Safari和app间cookie互通">
+                <i class="fa fa-weibo"></i><span class="">分享到 微博</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/08/13/iOS9下Safari和app间cookie互通/&amp;title=iOS9下Safari和app间cookie互通">
+                <i class="fa fa-weixin"></i><span class="">分享到 微信</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avator.png"/>
+        
+            <h4 id="about-card-name">Li Jin</h4>
+        
+            <h5 id="about-card-bio"><p>萧瑟的秋风，倔强的生命</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS 开发工程师</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                北京 新浪
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/bg-1.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'mlijin9011'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>

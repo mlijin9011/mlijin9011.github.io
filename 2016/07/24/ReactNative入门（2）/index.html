@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="木子李的博客">
+    <title>ReactNative入门（2）—— 接入原生应用 - 木子李的博客</title>
+    <meta name="author" content="Li Jin">
+    
+    
+        <link rel="icon" href="http://mlijin9011.github.io/assets/images/favicon.png">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="安装 React Native 依赖在工程所在目录新建一个文件夹，作为 JS 文件目录，在这个文件夹下，安装 React 和 React Native 依赖：
+123cd x/xx/xxx #你的工程路径npm install reactnpm install react-native
+这时这个文件夹下会出现一个 node_modules 文件夹，react 依赖库就在这个文件夹下。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="ReactNative入门（2）—— 接入原生应用">
+<meta property="og:url" content="http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/index.html">
+<meta property="og:site_name" content="木子李的博客">
+<meta property="og:description" content="安装 React Native 依赖在工程所在目录新建一个文件夹，作为 JS 文件目录，在这个文件夹下，安装 React 和 React Native 依赖：
+123cd x/xx/xxx #你的工程路径npm install reactnpm install react-native
+这时这个文件夹下会出现一个 node_modules 文件夹，react 依赖库就在这个文件夹下。">
+<meta property="og:updated_time" content="2017-04-12T02:52:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactNative入门（2）—— 接入原生应用">
+<meta name="twitter:description" content="安装 React Native 依赖在工程所在目录新建一个文件夹，作为 JS 文件目录，在这个文件夹下，安装 React 和 React Native 依赖：
+123cd x/xx/xxx #你的工程路径npm install reactnpm install react-native
+这时这个文件夹下会出现一个 node_modules 文件夹，react 依赖库就在这个文件夹下。">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://mlijin9011.github.io/assets/images/avator.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?be9c17478047a4653021804380e57147";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">木子李的博客</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avator.png"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avator.png"/>
+            </a>
+            <span class="sidebar-profile-name">Li Jin</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/mlijin9011" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://weibo.com/mlj90" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:lijinysu@163.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            ReactNative入门（2）—— 接入原生应用
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-07-24T10:18:09+08:00">
+	
+		    2016-07-24
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/技术/">技术</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h2 id="安装-React-Native-依赖"><a href="#安装-React-Native-依赖" class="headerlink" title="安装 React Native 依赖"></a>安装 React Native 依赖</h2><p>在工程所在目录新建一个文件夹，作为 JS 文件目录，在这个文件夹下，安装 React 和 React Native 依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd x/xx/xxx #你的工程路径</div><div class="line">npm install react</div><div class="line">npm install react-native</div></pre></td></tr></table></figure>
+<p>这时这个文件夹下会出现一个 node_modules 文件夹，react 依赖库就在这个文件夹下。</p>
+<a id="more"></a>
+<h2 id="CocoaPods安装"><a href="#CocoaPods安装" class="headerlink" title="CocoaPods安装"></a>CocoaPods安装</h2><p>在 Podfile 文件中增加以下的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># path 后面的内容修改为正确的路径，根据你的 node_modules 文件夹路径。</div><div class="line">pod &apos;React&apos;, :path =&gt; &apos;./node_modules/react-native&apos;, :subspecs =&gt; [</div><div class="line">  &apos;Core&apos;,</div><div class="line">  &apos;RCTImage&apos;,</div><div class="line">  &apos;RCTNetwork&apos;,</div><div class="line">  &apos;RCTText&apos;,</div><div class="line">  # 添加其他你想在工程中使用的依赖。</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>接着安装 pods：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pod install</div></pre></td></tr></table></figure>
+<h2 id="创建-React-Native-应用"><a href="#创建-React-Native-应用" class="headerlink" title="创建 React Native 应用"></a>创建 React Native 应用</h2><p>首先，创建一个文件夹来保存 React 代码，然后创建一个 js 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir ReactViews</div><div class="line">$ touch ReactViews/test.js</div></pre></td></tr></table></figure>
+<p>然后写你的 js 代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&apos;use strict&apos;;</div><div class="line"></div><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  Text,</div><div class="line">  StyleSheet,</div><div class="line">  View,</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line"></div><div class="line">var styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    backgroundColor: &apos;red&apos;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">class SimpleApp extends Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;View style=&#123;styles.container&#125;&gt;</div><div class="line">        &lt;Text&gt;This is a simple react native application.&lt;/Text&gt;</div><div class="line">      &lt;/View&gt;</div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">AppRegistry.registerComponent(&apos;SimpleApp&apos;, () =&gt; SimpleApp);</div></pre></td></tr></table></figure>
+<p>SimpleApp 是你的模块名，这个在后面会要用到。</p>
+<p>接着，往应用里添加容器视图，来容纳 React Native 组件，它可以是你应用里任何的 UIView。</p>
+<p>新建一个 ReactView 继承 UIView。</p>
+<p>// ReactView.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line">@interface ReactView : UIView</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>往 ReactView 里添加 RCTRootView，来包含你的 React Native 应用。</p>
+<p>// ReactView.m </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">#import &quot;RCTRootView.h&quot;</div><div class="line"></div><div class="line">@implementation MZLReactView</div><div class="line"></div><div class="line">- (instancetype)initWithFrame:(CGRect)frame &#123;</div><div class="line">    self = [super initWithFrame:frame];</div><div class="line">    if (self) &#123;</div><div class="line">        self.backgroundColor = [UIColor grayColor];</div><div class="line">        </div><div class="line">        NSURL *jsCodeLocation = [NSURL URLWithString:@&quot;http://localhost:8081/test.bundle?platform=ios&quot;];</div><div class="line">        // NSURL *jsCodeLocation = [[NSBundle mainBundle] URLForResource:@&quot;test&quot; withExtension:@&quot;jsbundle&quot;];</div><div class="line">    </div><div class="line">        RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation moduleName:@&quot;SimpleComponent&quot; initialProperties:nil launchOptions:nil];</div><div class="line">        [self addSubview:rootView];</div><div class="line">        </div><div class="line">        rootView.frame = self.bounds;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>在 UIViewController 中使用这个 ReactView，这样就创建了一个 React Native 应用。</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>在工程的根目录下，开启 React Native 开发服务器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(JS_DIR=`pwd`/ReactViews; cd node_modules/react-native; npm run start -- --root $JS_DIR)</div></pre></td></tr></table></figure>
+<p>这条命令会启动一个 React Native 开发服务器，用于构建我们的 bundle 文件。–root 选项用来标明你的 React Native 应用所在的根目录。在我们这里是 ReactViews 目录，里面有一个test.js 文件。开发服务器启动后会打包出 test.bundle 文件来，并可以通过 <code>http://localhost:8081/test.bundle</code> 来访问。</p>
+<p>现在编译和运行你的应用，就可以看到你的 React Native 应用在 ReactView 内运行。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在底层，当 RCTRootView 初始化完成以后，它会尝试从开发服务器下载、解析并运行打包后的脚本文件。所以你所要做的就是实现你自己的容器视图或者视图控制器，然后把 RCTRootView 作为子视图加入，接下来 RCTRootView 会搞定你的脚本文件然后渲染你的 React 组件。</p>
+<p>你可以在这里获得一个样例应用的完整源代码。</p>
+<p>参考博文：<a href="http://reactnative.cn/docs/0.31/integration-with-existing-apps.html#content" target="_blank" rel="external">React Native 中文网：嵌入到现有原生应用</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/React-Native/">React Native</a> <a class="tag tag--primary tag--small t-link" href="/tags/iOS/">iOS</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/08/13/iOS9下Safari和app间cookie互通/"  data-tooltip="iOS9下Safari和app间cookie互通">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/07/10/ReactNative入门（1）/" data-tooltip="React Native入门（1）—— 组件及生命周期">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+             <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/&amp;title=ReactNative入门（2）—— 接入原生应用">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/&amp;title=ReactNative入门（2）—— 接入原生应用">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/07/24/ReactNative入门（2）/"
+     data-title="ReactNative入门（2）—— 接入原生应用" data-url="http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Li Jin. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/08/13/iOS9下Safari和app间cookie互通/"  data-tooltip="iOS9下Safari和app间cookie互通">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/07/10/ReactNative入门（1）/" data-tooltip="React Native入门（1）—— 组件及生命周期">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+             <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/&amp;title=ReactNative入门（2）—— 接入原生应用">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/&amp;title=ReactNative入门（2）—— 接入原生应用">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/">
+                <i class="fa fa-twitter"></i><span class="">分享到 Twitter</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/&amp;title=ReactNative入门（2）—— 接入原生应用">
+                <i class="fa fa-weibo"></i><span class="">分享到 微博</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/24/ReactNative入门（2）/&amp;title=ReactNative入门（2）—— 接入原生应用">
+                <i class="fa fa-weixin"></i><span class="">分享到 微信</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avator.png"/>
+        
+            <h4 id="about-card-name">Li Jin</h4>
+        
+            <h5 id="about-card-bio"><p>萧瑟的秋风，倔强的生命</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS 开发工程师</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                北京 新浪
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/bg-1.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'mlijin9011'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>

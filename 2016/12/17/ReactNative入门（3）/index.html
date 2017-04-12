@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="木子李的博客">
+    <title>ReactNative入门（3）—— ReactNative与原生的交互 - 木子李的博客</title>
+    <meta name="author" content="Li Jin">
+    
+    
+        <link rel="icon" href="http://mlijin9011.github.io/assets/images/favicon.png">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="概述在项目中，通常我们会使用 RN 和原生混合开发的模式，所以这就涉及到一个重要的内容—— RN 和原生之间的数据交互。现在我们来一起看一下该怎样去实现数据交互。交互涉及到两部分内容:1. OC 打开 RN 页面；2. RN 调用 OC 方法；3. OC 调用 RN 方法。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="ReactNative入门（3）—— ReactNative与原生的交互">
+<meta property="og:url" content="http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/index.html">
+<meta property="og:site_name" content="木子李的博客">
+<meta property="og:description" content="概述在项目中，通常我们会使用 RN 和原生混合开发的模式，所以这就涉及到一个重要的内容—— RN 和原生之间的数据交互。现在我们来一起看一下该怎样去实现数据交互。交互涉及到两部分内容:1. OC 打开 RN 页面；2. RN 调用 OC 方法；3. OC 调用 RN 方法。">
+<meta property="og:updated_time" content="2017-04-12T02:52:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactNative入门（3）—— ReactNative与原生的交互">
+<meta name="twitter:description" content="概述在项目中，通常我们会使用 RN 和原生混合开发的模式，所以这就涉及到一个重要的内容—— RN 和原生之间的数据交互。现在我们来一起看一下该怎样去实现数据交互。交互涉及到两部分内容:1. OC 打开 RN 页面；2. RN 调用 OC 方法；3. OC 调用 RN 方法。">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://mlijin9011.github.io/assets/images/avator.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?be9c17478047a4653021804380e57147";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">木子李的博客</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avator.png"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avator.png"/>
+            </a>
+            <span class="sidebar-profile-name">Li Jin</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/mlijin9011" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://weibo.com/mlj90" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:lijinysu@163.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            ReactNative入门（3）—— ReactNative与原生的交互
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-12-17T16:03:28+08:00">
+	
+		    2016-12-17
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/技术/">技术</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>在项目中，通常我们会使用 RN 和原生混合开发的模式，所以这就涉及到一个重要的内容—— RN 和原生之间的数据交互。现在我们来一起看一下该怎样去实现数据交互。交互涉及到两部分内容:1. OC 打开 RN 页面；2. RN 调用 OC 方法；3. OC 调用 RN 方法。</p>
+<a id="more"></a>
+<h3 id="iOS-原生页面打开-RN-页面"><a href="#iOS-原生页面打开-RN-页面" class="headerlink" title="iOS 原生页面打开 RN 页面"></a>iOS 原生页面打开 RN 页面</h3><p>可以自定义一个 <code>ReactViewController</code> 类，在这个控制器中添加一个 <code>RCTRootView</code> 作为子 View。这样这个 ViewController 就可以显示一个 RN 页面了，具体实现方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    // Do any additional setup after loading the view.</div><div class="line">    </div><div class="line">	NSURL *jsCodeLocation = [NSURL URLWithString:@&quot;http://localhost:8081/index.ios.bundle?platform=ios&amp;dev=true&quot;];</div><div class="line">	RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation</div><div class="line">                                                      moduleName:@&quot;test&quot;</div><div class="line">                                               initialProperties:nil</div><div class="line">                                                   launchOptions:nil];</div><div class="line">	reactView.frame = self.view.bounds;</div><div class="line">	[self.view addSubView:rootView];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="RN-调用-OC-方法"><a href="#RN-调用-OC-方法" class="headerlink" title="RN 调用 OC 方法"></a>RN 调用 OC 方法</h3><p>首先创建一个工具类，来专门处理 RN 和 OC 间的交互，例如 <code>ReactUtil</code>，这个类需要实现 <code>RCTBridgeModule</code> 协议，<code>RCTBridgeModule</code> 是定义好的 protocol，实现该协议的类，会自动注册到 OC 对应的 Bridge 中。<br>OC-Bridge 上层负责与 OC 通信，下层负责和 JS-Bridge 通信，而 JS-Bridge 负责和 JS 通信。<br>这样通过 OC-Bridge 和 JS-Bridge 就可以实现 JS 和 OC 的相互调用了。</p>
+<p>ReactUtil 类的具体实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">RCT_EXPORT_MODULE()</div><div class="line"></div><div class="line">RCT_EXPORT_METHOD(jsInvokeApp:(NSString *)eventName parameter:(NSDictionary *)parameter resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) &#123;</div><div class="line">    NSLog(@&quot;接收到RN传过来的事件名：%@，数据为:%@&quot;, eventName, parameter);</div><div class="line">    </div><div class="line">    //  TODO: 具体业务处理，可根据eventName，parameter等区分</div><div class="line">    BOOL result;</div><div class="line">    if (result) &#123;</div><div class="line">        resolve(@&quot;&quot;);</div><div class="line">    &#125; else &#123;</div><div class="line">        NSError *error = [NSError errorWithDomain:@&quot;com.XXX.domain&quot; code:1 userInfo:nil];</div><div class="line">        reject(@&quot;code&quot;, @&quot;message&quot;, error);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所有实现 <code>RCTBridgeModule</code> 协议的类都必须显示的 include 宏命令: <code>RCT_EXPORT_MODULE()</code>。<br><code>RCT_EXPORT_MODULE</code> 的作用是当 OC-Bridge 加载的时候，自动注册一个 Module。这个 Module 可以在 JS-Bridge 中调用。<br><code>RCT_EXPORT_MODULE</code> 接受字符串作为其 Module 的名称，如果不设置名称的话默认就使用类名作为 Module 的名称。</p>
+<p>最后我们需要在 JS 文件中调用 <code>ReactUtil</code> 中的方法即可:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var &#123; NativeModules &#125; = require(&apos;react-native&apos;);</div><div class="line">var ReactUtil = NativeModules.ReactUtil;</div><div class="line"> </div><div class="line">//获取Promise对象处理</div><div class="line">async _updateEvents() &#123;</div><div class="line">    try &#123;</div><div class="line">       var events = await ReactUtil.jsInvokeApp(&apos;eventName&apos;, &#123;&apos;key&apos;:&apos;value&apos;&#125;);</div><div class="line">       this.setState(&#123;events&#125;);</div><div class="line">    &#125; catch(e) &#123;</div><div class="line">       this.setState(&#123;events:e.message&#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="OC-调用-RN-方法"><a href="#OC-调用-RN-方法" class="headerlink" title="OC 调用 RN 方法"></a>OC 调用 RN 方法</h3><p>在 0.27 版本之前，调用方式是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@synthesize bridge = _bridge; </div><div class="line">- (void)appInvokeJs:(NSString *)eventName eventBody:(NSDictionary *)eventBody &#123; </div><div class="line">  [_bridge.eventDispatcher sendDeviceEventWithName:eventName body:eventBody];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在 xcode 里面一直提示这种方式可能要被取代：</p>
+<p><code>&#39;sendDeviceEventWithName:body:&#39; is deprecated: Subclass RCTEventEmitter instead</code></p>
+<p>现在可以这样写：修改我们刚才写的 <code>ReactUtil</code> 继承自 <code>RCTEventEmitter</code></p>
+<p>然后要重写下面这个方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// TODO: 所有 app 通知 JS 的方法</div><div class="line">- (NSArray&lt;NSString *&gt; *)supportedEvents &#123;</div><div class="line">  return @[@&quot;appInvokeJs&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后实现你导出的所有方法，里面都使用 sendEventWithName 方法即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)appInvokeJs:(NSString *)eventName eventBody:(NSDictionary *)eventBody &#123;</div><div class="line">    NSMutableDictionary *body = [[NSMutableDictionary alloc] init];</div><div class="line">    [body setObject:eventName forKey:@&quot;eventName&quot;];</div><div class="line">    [body setObject:eventBody forKey:@&quot;eventBody&quot;];</div><div class="line">    [self sendEventWithName:@&quot;appInvokeJs&quot; body:body];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后 JS 端调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">import &#123;</div><div class="line">  ... </div><div class="line">  NativeModules,</div><div class="line">  NativeEventEmitter,  //导入 NativeEventEmitter 模块</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line">  </div><div class="line">var ReactUtil = NativeModules.ReactUtil;</div><div class="line">const myNativeEvent = new NativeEventEmitter(ReactUtil);  //创建自定义事件接口</div><div class="line">  </div><div class="line">//在组件中使用</div><div class="line">componentWillMount() &#123;</div><div class="line">    this.listener = myNativeEvent.addListener(&apos;appInvokeJs&apos;, this.appInvokeJs.bind(this)); </div><div class="line">&#125;</div><div class="line">componentWillUnmount() &#123; </div><div class="line">    this.listener &amp;&amp; this.listener.remove();</div><div class="line">    this.listener = null; </div><div class="line">&#125; </div><div class="line"></div><div class="line">appInvokeJs(data) &#123;</div><div class="line">    //接受原生传过来的数据 </div><div class="line">    data = &#123;eventName:,eventBody:&#125;</div><div class="line">    if (data.eventName == &apos;EventName&apos;) &#123;</div><div class="line">       //</div><div class="line">    &#125; else &#123;</div><div class="line">        </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/React-Native/">React Native</a> <a class="tag tag--primary tag--small t-link" href="/tags/iOS/">iOS</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/08/fastlane+jenkins实现iOS持续集成/"  data-tooltip="fastlane+jenkins实现iOS持续集成">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/08/13/iOS9下Safari和app间cookie互通/" data-tooltip="iOS9下Safari和app间cookie互通">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+             <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/&amp;title=ReactNative入门（3）—— ReactNative与原生的交互">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/&amp;title=ReactNative入门（3）—— ReactNative与原生的交互">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/12/17/ReactNative入门（3）/"
+     data-title="ReactNative入门（3）—— ReactNative与原生的交互" data-url="http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Li Jin. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/08/fastlane+jenkins实现iOS持续集成/"  data-tooltip="fastlane+jenkins实现iOS持续集成">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/08/13/iOS9下Safari和app间cookie互通/" data-tooltip="iOS9下Safari和app间cookie互通">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+             <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/&amp;title=ReactNative入门（3）—— ReactNative与原生的交互">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/&amp;title=ReactNative入门（3）—— ReactNative与原生的交互">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/">
+                <i class="fa fa-twitter"></i><span class="">分享到 Twitter</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/&amp;title=ReactNative入门（3）—— ReactNative与原生的交互">
+                <i class="fa fa-weibo"></i><span class="">分享到 微博</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/12/17/ReactNative入门（3）/&amp;title=ReactNative入门（3）—— ReactNative与原生的交互">
+                <i class="fa fa-weixin"></i><span class="">分享到 微信</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avator.png"/>
+        
+            <h4 id="about-card-name">Li Jin</h4>
+        
+            <h5 id="about-card-bio"><p>萧瑟的秋风，倔强的生命</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS 开发工程师</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                北京 新浪
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/bg-1.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'mlijin9011'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>

@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="木子李的博客">
+    <title>React Native入门（1）—— 组件及生命周期 - 木子李的博客</title>
+    <meta name="author" content="Li Jin">
+    
+    
+        <link rel="icon" href="http://mlijin9011.github.io/assets/images/favicon.png">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="概述作为一个 iOS 原生应用的开发者，刚开始接触 React Native，先来学习下 React Native 中的组件结构和生命周期，理解一个 React Native 组件如何进行展示，如何进行开发。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="React Native入门（1）—— 组件及生命周期">
+<meta property="og:url" content="http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/index.html">
+<meta property="og:site_name" content="木子李的博客">
+<meta property="og:description" content="概述作为一个 iOS 原生应用的开发者，刚开始接触 React Native，先来学习下 React Native 中的组件结构和生命周期，理解一个 React Native 组件如何进行展示，如何进行开发。">
+<meta property="og:image" content="http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/component-lifecycle.jpg">
+<meta property="og:updated_time" content="2017-04-12T02:52:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native入门（1）—— 组件及生命周期">
+<meta name="twitter:description" content="概述作为一个 iOS 原生应用的开发者，刚开始接触 React Native，先来学习下 React Native 中的组件结构和生命周期，理解一个 React Native 组件如何进行展示，如何进行开发。">
+<meta name="twitter:image" content="http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/component-lifecycle.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://mlijin9011.github.io/assets/images/avator.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?be9c17478047a4653021804380e57147";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">木子李的博客</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avator.png"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avator.png"/>
+            </a>
+            <span class="sidebar-profile-name">Li Jin</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/mlijin9011" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://weibo.com/mlj90" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:lijinysu@163.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            React Native入门（1）—— 组件及生命周期
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-07-10T11:54:34+08:00">
+	
+		    2016-07-10
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/技术/">技术</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>作为一个 iOS 原生应用的开发者，刚开始接触 React Native，先来学习下 React Native 中的组件结构和生命周期，理解一个 React Native 组件如何进行展示，如何进行开发。</p>
+<a id="more"></a>
+<h2 id="组件的构成"><a href="#组件的构成" class="headerlink" title="组件的构成"></a>组件的构成</h2><p>在 React Native 中，所有展示的界面，都可以看做是一个组件（Component），每一个组件根据功能和逻辑的复杂程度，又都是由许多小的组件拼成，每个小的组件也都有自己对应的逻辑，不过他们都遵循同样的代码结构。</p>
+<p>先来看一个完整的 js 文件中的代码，然后我们以它为例来分析其中的代码结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">&apos;use strict&apos;;</div><div class="line"></div><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View</div><div class="line">&#125; from &apos;react-native&apos;;</div><div class="line"></div><div class="line">class AwesomeProject extends Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;View style=&#123;&#123;alignItems: &apos;center&apos;&#125;&#125;&gt;</div><div class="line">        &lt;Text style=&#123;styles.welcome&#125;&gt;</div><div class="line">          Welcome to React Native!</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">          To get started, edit index.ios.js</div><div class="line">        &lt;/Text&gt;</div><div class="line">        &lt;Text style=&#123;styles.instructions&#125;&gt;</div><div class="line">          Press Cmd+R to reload,&#123;&apos;\n&apos;&#125;</div><div class="line">          Cmd+D or shake for dev menu</div><div class="line">        &lt;/Text&gt;</div><div class="line">      &lt;/View&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    justifyContent: &apos;center&apos;,</div><div class="line">    alignItems: &apos;center&apos;,</div><div class="line">    backgroundColor: &apos;#F5FCFF&apos;,</div><div class="line">  &#125;,</div><div class="line">  welcome: &#123;</div><div class="line">    fontSize: 20,</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    margin: 10,</div><div class="line">  &#125;,</div><div class="line">  instructions: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;#333333&apos;,</div><div class="line">    marginBottom: 5,</div><div class="line">  &#125;,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">AppRegistry.registerComponent(&apos;AwesomeProject&apos;, () =&gt; AwesomeProject);</div></pre></td></tr></table></figure>
+<p>这段代码中组件的代码结构：</p>
+<h3 id="包和组件引用"><a href="#包和组件引用" class="headerlink" title="包和组件引用"></a>包和组件引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&apos;use strict&apos;;</div><div class="line"></div><div class="line">import React, &#123; Component &#125; from &apos;react&apos;;</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View</div><div class="line">&#125; from &apos;react-native&apos;;</div></pre></td></tr></table></figure>
+<p><code>&#39;use strict&#39;</code> 表示开启了 Strict Mode，Strict Mode 使 JavaScript 的错误处理可以有所提高，一些语言缺陷也可以避免。</p>
+<p><code>import {} from &#39;&#39;</code> 表示将 react、react-native 包加载进来，{ } 中的内容是引用来自 React Native 官方的组件、API 以及第三方或开发者项目中构建的组件，形式为该组件或 API 的 React 类名。import 是 ES6 的语法，这个概念等同于 iOS 或者 Swift 中的 “链接库” 或者 “导入库”。</p>
+<h3 id="组件类的声明"><a href="#组件类的声明" class="headerlink" title="组件类的声明"></a>组件类的声明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class AwesomeProject extends Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      ...</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这部分用于构造组件的状态和具体的展示结构，class 是在 ES6 中被引入的，利用 <code>class xxx extends Component {...}</code> 来实例化一个 React Native 组件对象，{ } 中的内容会包含组件的几个重要的生命周期（见下文），这部分是一个组件必不可少的地方，没有这些内容，就无法构成一个组件。</p>
+<h3 id="组件样式的声明"><a href="#组件样式的声明" class="headerlink" title="组件样式的声明"></a>组件样式的声明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    justifyContent: &apos;center&apos;,</div><div class="line">    alignItems: &apos;center&apos;,</div><div class="line">    backgroundColor: &apos;#F5FCFF&apos;,</div><div class="line">  &#125;,</div><div class="line">  welcome: &#123;</div><div class="line">    fontSize: 20,</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    margin: 10,</div><div class="line">  &#125;,</div><div class="line">  instructions: &#123;</div><div class="line">    textAlign: &apos;center&apos;,</div><div class="line">    color: &apos;#333333&apos;,</div><div class="line">    marginBottom: 5,</div><div class="line">  &#125;,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>使用 <code>StyleSheet.create({...})</code> 来实例化 React Native 样式对象，{ } 中的内容为 JSON 形式的 React Native 样式，来源于 CSS3，这些声明的样式可以在上面构建组件时（JSX 代码中）使用。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AppRegistry.registerComponent(&apos;AwesomeProject&apos;, () =&gt; AwesomeProject);</div></pre></td></tr></table></figure>
+<p>AppRegistry 定义了 App 的入口，并提供了根组件。这部分只有在作为入口的 js 文件中才会有。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">module.exports = HelloWorld;</div></pre></td></tr></table></figure>
+<p>这里导出了 HelloWorld 类，可以在外部 js 文件中引入 HelloWorld 组件。这部分只有在非入口js 文件中才会有。</p>
+<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p>一个 React Native 组件的生命周期分为实例化、存在期和销毁期三个阶段，如下图。</p>
+<p>第一阶段：实例化期，是组件第一次绘制阶段，如图中的上面的虚线框内，在这个阶段完成了组件的加载和初始化；</p>
+<p>第二阶段：存在期，是组件正在运行和交互阶段，如图中的左下的虚线框内，在这个阶段组件可以处理用户交互，或者接收事件更新界面；</p>
+<p>第三阶段：销毁期，是组件被卸载消亡的阶段，如图中的右下的虚线框内，在这个阶段做一些组件的清理工作。</p>
+<p><img src="/2016/07/10/ReactNative入门（1）/component-lifecycle.jpg" alt="logo"></p>
+<p>下面具体分析组件生命周期的各个阶段：</p>
+<h3 id="实例化阶段"><a href="#实例化阶段" class="headerlink" title="实例化阶段"></a>实例化阶段</h3><p>实例化期分为5个阶段，每个阶段以一个函数来进行控制：</p>
+<p><strong>getDefaultProps</strong></p>
+<p>在组件创建的时候，会先调用 <code>getDefaultProps()</code>。由于这个函数在整个生命周期中只会调用一次，所以通常在这里会初始化组件的一些默认属性，将固定的内容放在这个过程中进行初始化和赋值。</p>
+<p><strong>getInitialState</strong></p>
+<p>在组件被创建后并加载的时候，会先调用 <code>getInitialState()</code> 来初始化组件的状态。该函数在整个生命周期中只会调用一次。</p>
+<p><strong>componentWillMount</strong></p>
+<p>在组件初始化后准备加载组件的时候，会先调用 <code>componentWillMount()</code>，在第一次绘制 <code>render()</code> 之前调用，也是渲染一个组件前最后一次修改 state 的机会。这个函数在整个生命周期中也只被调用一次，可以在这里做一些业务初始化操作，也可以设置组件状态。</p>
+<p><strong>render</strong></p>
+<p>这是一个组件必须有的方法，形式为一个有返回值的函数，会返回一段 JSX 或其他 React 组件来构成 DOM，表示该组件的结构和布局，和 Android 的 XML 布局类似。在 <code>render()</code> 函数中，只能通过 this.state 和 this.props 来访问在之前函数中初始化的数据值。</p>
+<p><strong>componentDidMount</strong></p>
+<p>在组件第一次绘制之后，会调用 <code>componentDidMount()</code>，表示组件已经加载完成，这个函数在整个生命周期中也只被调用一次。</p>
+<p>从这个函数开始，就可以和 JS 其他框架交互了，例如设置计时 setTimeout、setInterval，或者发起网络请求，放在这个函数里进行，来保证不会出现UI上的错误。这个函数之后，就进入了稳定运行状态，等待事件触发。</p>
+<blockquote>
+<p>注：先调用子组件的 componentDidMount()，然后才调用父组件的。</p>
+</blockquote>
+<h3 id="运行阶段"><a href="#运行阶段" class="headerlink" title="运行阶段"></a>运行阶段</h3><p>运行期主要是用来处理与用户的交互：</p>
+<p><strong>componentWillReceiveProps</strong></p>
+<p>如果父元素对组件的属性（props）进行了修改，组件收到新的属性时，就会调用 <code>componentWillReceiveProps(object nextProps)</code>，参数 nextProps 是即将被设置的属性，可以通过 <code>this.props</code> 来获取旧的属性。</p>
+<p>在这个回调函数里面，你可以根据属性的变化，通过调用 <code>this.setState()</code> 来更新组件状态，这里调用更新状态是安全的，并不会触发额外的 render() 调用。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">componentWillReceiveProps: function(nextProps) &#123;  </div><div class="line">  this.setState(&#123;</div><div class="line">    likesIncreasing: nextProps.likeCount &gt; this.props.likeCount</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>shouldComponentUpdate</strong></p>
+<p>当组件接收到新的属性或者状态改变时，都会触发调用 <code>boolean shouldComponentUpdate(object nextProps, object nextState)</code>，参数 nextProps 是即将被设置的属性，同 <code>componentWillReceiveProps(...)</code> 一样，nextState 是即将更新的状态值。这个函数返回一个布尔值，来决定是否需要更新组件进行渲染，返回 true 表示需要更新，继续走后面的更新流程。否则不更新，直接进入等待状态。</p>
+<p><strong>componentWillUpdate</strong></p>
+<p>如果组件状态或者属性改变，并且上面的 <code>shouldComponentUpdate(...)</code> 返回为 true 时，会在开始渲染组件之前调用 <code>componentWillUpdate(object nextProps, object nextState)</code>，参数同 <code>shouldComponentUpdate(...)</code> 。这个函数调用之后，就会把 nextProps 和 nextState 分别设置到 this.props 和 this.state 中。接着就会调用 render() 来更新界面了。</p>
+<p><strong>componentDidUpdate</strong></p>
+<p>调用了 <code>render()</code> 更新完成界面之后，会调用 <code>componentDidUpdate(object prevProps, object prevState)</code>，此函数的输入参数变成了 prevProps 和 prevState，因为到这里已经完成了属性和状态的更新了。</p>
+<h3 id="销毁阶段"><a href="#销毁阶段" class="headerlink" title="销毁阶段"></a>销毁阶段</h3><p><strong>componentWillUnmount</strong></p>
+<p>当组件要被从界面上移除的时候，就会调用 <code>componentWillUnmount()</code>，在这个函数中，可以做一些组件相关的清理工作，例如取消计时器、网络请求、点击事件Listener等。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>组件的生命周期分成三个状态：</p>
+<pre><code>Mounting：  已插入真实 DOM
+Updating：  正在被重新渲染
+Unmounting：已移出真实 DOM
+</code></pre><p>React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数：</p>
+<pre><code>componentWillMount()
+componentDidMount()
+componentWillUpdate(object nextProps, object nextState)
+componentDidUpdate(object prevProps, object prevState)
+componentWillUnmount()
+</code></pre><p>此外，React 还提供两种特殊状态的处理函数：</p>
+<pre><code>componentWillReceiveProps(object nextProps)：组件收到新的参数时调用
+shouldComponentUpdate(object nextProps, object nextState)：判断是否重新渲染时调用
+</code></pre><p>两个初始化函数：</p>
+<pre><code>getDefaultProps()：进行初始化和赋值
+getInitialState()：初始化组件的状态
+</code></pre><p>渲染函数：</p>
+<pre><code>render()
+</code></pre><p>参考博文：<a href="http://www.race604.com/react-native-component-lifecycle/" target="_blank" rel="external">React Native 中组件的生命周期</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/React-Native/">React Native</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/07/24/ReactNative入门（2）/"  data-tooltip="ReactNative入门（2）—— 接入原生应用">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/07/07/hello-world/" data-tooltip="Hello World">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+             <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/&amp;title=React Native入门（1）—— 组件及生命周期">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/&amp;title=React Native入门（1）—— 组件及生命周期">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/07/10/ReactNative入门（1）/"
+     data-title="React Native入门（1）—— 组件及生命周期" data-url="http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Li Jin. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/07/24/ReactNative入门（2）/"  data-tooltip="ReactNative入门（2）—— 接入原生应用">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/07/07/hello-world/" data-tooltip="Hello World">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+             <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/&amp;title=React Native入门（1）—— 组件及生命周期">
+                <i class="fa fa-weibo"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default tooltip--top" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/&amp;title=React Native入门（1）—— 组件及生命周期">
+                <i class="fa fa-weixin"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至Twitter"href="https://twitter.com/intent/tweet?text=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/">
+                <i class="fa fa-twitter"></i><span class="">分享到 Twitter</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至新浪微博" href="http://www.jiathis.com/send/?webid=tsina&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/&amp;title=React Native入门（1）—— 组件及生命周期">
+                <i class="fa fa-weibo"></i><span class="">分享到 微博</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" data-tooltip="分享至微信" href="http://www.jiathis.com/send/?webid=weixin&amp;appkey=&amp;uid=你的uid&amp;url=http://mlijin9011.github.io/2016/07/10/ReactNative入门（1）/&amp;title=React Native入门（1）—— 组件及生命周期">
+                <i class="fa fa-weixin"></i><span class="">分享到 微信</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avator.png"/>
+        
+            <h4 id="about-card-name">Li Jin</h4>
+        
+            <h5 id="about-card-bio"><p>萧瑟的秋风，倔强的生命</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS 开发工程师</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                北京 新浪
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/bg-1.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'mlijin9011'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>
