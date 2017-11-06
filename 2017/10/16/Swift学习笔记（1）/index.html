@@ -96,19 +96,16 @@
 
 
 
-<meta name="description" content="1. Swift 语法1.1 可选类型1.可选类型解析
-12345var errorCode: Int? = 404              // 在类型后面添加一个?，表示是可选类型print(errorCode)                       // Optional(404)if errorCode != nil &amp;#123;                  // 确定可选类">
+<meta name="description" content="1. Swift 语法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Swift学习笔记（1）">
 <meta property="og:url" content="http://mlijin9011.github.io/2017/10/16/Swift学习笔记（1）/index.html">
 <meta property="og:site_name" content="木子李的博客">
-<meta property="og:description" content="1. Swift 语法1.1 可选类型1.可选类型解析
-12345var errorCode: Int? = 404              // 在类型后面添加一个?，表示是可选类型print(errorCode)                       // Optional(404)if errorCode != nil &amp;#123;                  // 确定可选类">
-<meta property="og:updated_time" content="2017-11-06T07:40:20.330Z">
+<meta property="og:description" content="1. Swift 语法">
+<meta property="og:updated_time" content="2017-11-06T07:47:47.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift学习笔记（1）">
-<meta name="twitter:description" content="1. Swift 语法1.1 可选类型1.可选类型解析
-12345var errorCode: Int? = 404              // 在类型后面添加一个?，表示是可选类型print(errorCode)                       // Optional(404)if errorCode != nil &amp;#123;                  // 确定可选类">
+<meta name="twitter:description" content="1. Swift 语法">
 
 
 
@@ -369,7 +366,8 @@
       
 
       
-        <h1 id="1-Swift-语法"><a href="#1-Swift-语法" class="headerlink" title="1. Swift 语法"></a>1. Swift 语法</h1><h2 id="1-1-可选类型"><a href="#1-1-可选类型" class="headerlink" title="1.1 可选类型"></a>1.1 可选类型</h2><p>1.可选类型解析</p>
+        <h1 id="1-Swift-语法"><a href="#1-Swift-语法" class="headerlink" title="1. Swift 语法"></a>1. Swift 语法</h1><a id="more"></a>
+<h2 id="1-1-可选类型"><a href="#1-1-可选类型" class="headerlink" title="1.1 可选类型"></a>1.1 可选类型</h2><p>1.可选类型解析</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var errorCode: Int? = 404              // 在类型后面添加一个?，表示是可选类型</div><div class="line">print(errorCode)                       // Optional(404)</div><div class="line">if errorCode != nil &#123;                  // 确定可选类型包含值后可以在变量名后加!强制解析</div><div class="line">  print(errorCode!)                    // 404</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="1-2-基本运算符"><a href="#1-2-基本运算符" class="headerlink" title="1.2 基本运算符"></a>1.2 基本运算符</h2><p>1.空合运算符: a ?? b    </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let optionalE: Int? = 4     // ?? 前面那个值要为可选类型</div><div class="line">let d = optionalE ?? b      // 4, 如果optionalE为空,d为b的值，如果不为空就是optionalE解包后的值</div></pre></td></tr></table></figure>
